@@ -2,6 +2,7 @@ package com.situ.mall.controller;
 
 import com.situ.mall.pojo.Product;
 import com.situ.mall.service.IProductService;
+import com.situ.mall.util.LayUITableJSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,17 @@ public class ProductController {
     @RequestMapping("/selectById")
     public Product selectById(Integer id){
         return productService.selectById(id);
+    }
+
+    @RequestMapping("/getProudctListPage")
+    public String getProudctListPage() {
+        return "product_list";
+    }
+
+    @ResponseBody
+    @RequestMapping("/selectByPage")
+    public LayUITableJSONResult selectByPage(Integer page, Integer limit) {
+        return productService.selectByPage(page, limit);
     }
 
 }
