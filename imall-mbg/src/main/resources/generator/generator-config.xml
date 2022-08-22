@@ -44,17 +44,17 @@
                              targetPackage="com.situ.mall.mapper"
                              type="XMLMAPPER"/>
 
-        <table schema="" tableName="cart" ></table>
+        <!--<table schema="" tableName="cart" ></table>
         <table schema="" tableName="category"></table>
         <table schema="" tableName="order"></table>
         <table schema="" tableName="order_item"></table>
         <table schema="" tableName="pay_info"></table>
         <table schema="" tableName="product" ></table>
         <table schema="" tableName="shipping"></table>
-        <table schema="" tableName="user"></table>
+        <table schema="" tableName="user"></table>-->
 
         <!-- 指定数据库表 -->
-        <!--<table schema="" tableName="cart" enableCountByExample="false" enableUpdateByExample="false"
+        <table schema="" tableName="cart" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"></table>
         <table schema="" tableName="category"  enableCountByExample="false" enableUpdateByExample="false"
@@ -80,7 +80,7 @@
                selectByExampleQueryId="false"></table>
         <table schema="" tableName="user"  enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false"></table>-->
+               selectByExampleQueryId="false"></table>
 
        <!-- <table schema="" tableName="order"  enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"

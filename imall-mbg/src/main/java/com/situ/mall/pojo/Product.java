@@ -15,6 +15,10 @@ public class Product implements Serializable {
 
     private String mainImage;
 
+    private String subImages;
+
+    private String detail;
+
     private BigDecimal price;
 
     private Integer stock;
@@ -24,10 +28,6 @@ public class Product implements Serializable {
     private Date createTime;
 
     private Date updateTime;
-
-    private String subImages;
-
-    private String detail;
 
     private static final long serialVersionUID = 1L;
 
@@ -71,6 +71,22 @@ public class Product implements Serializable {
         this.mainImage = mainImage;
     }
 
+    public String getSubImages() {
+        return subImages;
+    }
+
+    public void setSubImages(String subImages) {
+        this.subImages = subImages;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -111,22 +127,6 @@ public class Product implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public String getSubImages() {
-        return subImages;
-    }
-
-    public void setSubImages(String subImages) {
-        this.subImages = subImages;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -138,13 +138,13 @@ public class Product implements Serializable {
         sb.append(", name=").append(name);
         sb.append(", subtitle=").append(subtitle);
         sb.append(", mainImage=").append(mainImage);
+        sb.append(", subImages=").append(subImages);
+        sb.append(", detail=").append(detail);
         sb.append(", price=").append(price);
         sb.append(", stock=").append(stock);
         sb.append(", status=").append(status);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", subImages=").append(subImages);
-        sb.append(", detail=").append(detail);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
