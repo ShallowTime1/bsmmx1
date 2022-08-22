@@ -32,4 +32,9 @@ public class ProductController {
         return productService.selectByPage(page, limit);
     }
 
+    @RequestMapping("/getProductAddPage")
+    public String getProductAddPage() {
+        return "product_add";
+    }
+
 }
