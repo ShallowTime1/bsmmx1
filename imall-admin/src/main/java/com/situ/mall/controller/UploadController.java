@@ -1,7 +1,9 @@
 package com.situ.mall.controller;
 
 
+import com.situ.mall.util.ImageServerUtil;
 import com.situ.mall.util.JSONResult;
+import com.situ.mall.util.QiniuUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +25,19 @@ public class UploadController {
         String fileName = file.getOriginalFilename();
         String extension = FilenameUtils.getExtension(fileName);
         String newFileName = name + "." + extension;
-        String filePath = "F:\\mypic\\" + newFileName;
-        try {
-            file.transferTo(new File(filePath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (ImageServerUtil.IMG_SERVER == ImageServerUtil.LOCAL) {
+            String filePath = "F:\\mypic\\" + newFileName;
+            try {
+                file.transferTo(new File(filePath));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }else {
+            try {
+                QiniuUtils.upload2Qiniu(file.getBytes(), newFileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return JSONResult.ok("上传成功",newFileName);
     }
