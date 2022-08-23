@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.situ.mall.mapper.ProductMapper;
 import com.situ.mall.pojo.Product;
 import com.situ.mall.service.IProductService;
+import com.situ.mall.util.JSONResult;
 import com.situ.mall.util.LayUITableJSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,11 @@ public class ProductServiceImpl implements IProductService {
         PageInfo pageInfo = new PageInfo(list);
         long totalCount = pageInfo.getTotal();
         return LayUITableJSONResult.ok((int)totalCount,pageInfo);
+    }
+
+    @Override
+    public JSONResult add(Product product) {
+        productMapper.insert(product);
+        return JSONResult.ok("插入成功");
     }
 }

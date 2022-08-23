@@ -2,6 +2,7 @@ package com.situ.mall.controller;
 
 import com.situ.mall.pojo.Product;
 import com.situ.mall.service.IProductService;
+import com.situ.mall.util.JSONResult;
 import com.situ.mall.util.LayUITableJSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,12 @@ public class ProductController {
     @RequestMapping("/getProductAddPage")
     public String getProductAddPage() {
         return "product_add";
+    }
+
+    @ResponseBody
+    @RequestMapping("/add")
+    public JSONResult add(Product product) {
+        return productService.add(product);
     }
 
 }
