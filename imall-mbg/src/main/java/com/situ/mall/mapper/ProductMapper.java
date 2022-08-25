@@ -18,4 +18,5 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product record);
 
     List<Product> selectAll();
+
 }

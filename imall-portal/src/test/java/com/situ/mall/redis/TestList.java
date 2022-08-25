@@ -25,7 +25,7 @@ public class TestList {
 
     @Test
     public void getValue() {
-        List list = redisTemplate.opsForList().range("nameList", 0, -1);
+        List list = redisTemplate.opsForList().range("secondCategoryList", 0, -1);
         System.out.println(list);
     }
 
@@ -38,7 +38,7 @@ public class TestList {
 
     @Test
     public void deleteValue() {
-        redisTemplate.delete("nameList");
+        redisTemplate.delete("topCategoryList");
     }
 
 }
