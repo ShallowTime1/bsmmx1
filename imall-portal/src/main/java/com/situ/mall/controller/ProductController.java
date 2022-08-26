@@ -32,7 +32,8 @@ public class ProductController {
 
     @RequestMapping("/getProductDetailPage")
     public String getProductDetailPage(Integer id, Model model) {
-
+        Product product = productService.selectById(id);
+        model.addAttribute("product", product);
         return "product_detail";
     }
 
