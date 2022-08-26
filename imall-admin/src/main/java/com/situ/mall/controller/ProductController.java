@@ -22,8 +22,8 @@ public class ProductController {
         return productService.selectById(id);
     }
 
-    @RequestMapping("/getProudctListPage")
-    public String getProudctListPage() {
+    @RequestMapping("/getProductListPage")
+    public String getProductListPage() {
         return "product_list";
     }
 

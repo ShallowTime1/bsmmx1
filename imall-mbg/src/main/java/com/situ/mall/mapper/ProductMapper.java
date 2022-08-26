@@ -19,4 +19,5 @@ public interface ProductMapper {
 
     List<Product> selectAll();
 
+    List<Product> selectListByCategoryId(Integer id);
 }
