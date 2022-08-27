@@ -19,7 +19,7 @@ public class ProductController {
 
     @ResponseBody
     @RequestMapping("/selectById")
-    public Product selectById(Integer id){
+    public Product selectById(Integer id) {
         return productService.selectById(id);
     }
 
