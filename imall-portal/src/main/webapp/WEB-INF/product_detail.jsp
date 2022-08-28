@@ -8,6 +8,7 @@
 
 </head>
 <body>
+
 <div class="header_con">
     <div class="header">
         <div class="welcome fl">欢迎来到天天生鲜!</div>
@@ -77,7 +78,7 @@
 </div>
 
 <div class="goods_detail_con clearfix">
-    <div class="goods_detail_pic fl"><img src="${product.mainImageUrl}"></div>
+    <div class="goods_detail_pic fl"><img style="width: 350px; width: 350px" src="${product.mainImageUrl}"></div>
 
     <div class="goods_detail_list fr">
         <h3>${product.name}</h3>
@@ -89,7 +90,7 @@
         <div class="goods_num clearfix">
             <div class="num_name fl">数 量：</div>
             <div class="num_add fl">
-                <input type="text" class="num_show fl" value="1">
+                <input type="text" class="num_show fl" id="quantity" value="1">
                 <a href="javascript:;" class="add fr">+</a>
                 <a href="javascript:;" class="minus fr">-</a>
             </div>
@@ -152,8 +153,80 @@
 </div>
 <div class="add_jump"></div>
 
+
+<div id="loginForm" style="display: none" class="login_form fr">
+    <div class="login_title clearfix">
+        <h1>用户登录</h1>
+        <a href="#">立即注册</a>
+    </div>
+    <div class="form_input">
+        <form id="formId">
+            <input type="text" name="username" class="name_input" placeholder="请输入用户名">
+            <div class="user_error">输入错误</div>
+            <input type="password" name="password" class="pass_input" placeholder="请输入密码">
+            <div class="pwd_error">输入错误</div>
+            <div class="more_input clearfix">
+                <input type="checkbox" name="">
+                <label>记住用户名</label>
+                <a href="#">忘记密码</a>
+            </div>
+            <input type="button" onclick="submitForm()" name="" value="登录" class="input_submit">
+        </form>
+    </div>
+</div>
+
 <script type="text/javascript" src="js/jquery-1.12.2.js"></script>
 <script type="text/javascript">
+
+    $('#add_cart').click(function () {
+        $.post(
+            '/user/checkUserLogin',
+            function (jsonResult) {
+                if (jsonResult.ok) {
+                    insertToCart();
+                } else {
+                    layer.open({
+                        type : 1,
+                        title : "登录",
+                        area : ['370px', '480px'],
+                        content : $('#loginForm')
+                    });
+                }
+            },
+            'json'
+        );
+    });
+
+    function submitForm() {
+        $.post(
+            '/user/login',
+            $('#formId').serialize(),
+            function (jsonResult) {
+                if (jsonResult.ok) {
+                    insertToCart();
+                } else {
+                    mylayer.errorMsg(jsonResult.msg);
+                }
+            },
+            'json'
+        );
+    }
+
+    function insertToCart() {
+        $.post(
+            '/cart/add',
+            {'productId' : '${product.id}', 'quantity' : $('#quantity').val()},
+            function (jsonResult) {
+                if (jsonResult.ok) {
+                    mylayer.okUrl(jsonResult.msg, '/cart/getCartListPage');
+                } else {
+                    mylayer.errorMsg(jsonResult.msg);
+                }
+            },
+            'json'
+        );
+    }
+
     var $add_x = $('#add_cart').offset().top;
     var $add_y = $('#add_cart').offset().left;
 
