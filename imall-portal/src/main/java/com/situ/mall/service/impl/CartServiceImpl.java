@@ -34,4 +34,9 @@ public class CartServiceImpl implements ICartService {
     public void updateChecked(Integer id, Integer checked) {
         cartMapper.updateChecked(id, checked);
     }
+
+    @Override
+    public List<CartVO> selectByUserIdAndChecked(Integer id) {
+        return cartMapper.selectByUserIdAndChecked(id);
+    }
 }
