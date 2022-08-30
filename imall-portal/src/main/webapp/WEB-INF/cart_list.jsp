@@ -24,10 +24,10 @@
     <ul id="cartVO${cartVO.id}" class="cart_list_td clearfix">
         <li   class="col01">
             <c:if test="${cartVO.checked == 1}">
-                <input onclick="updateCheck(this.checked, ${cartVO.id})" type="checkbox" name="" checked>
+                <input id="checkedBoxId${cartVO.id}" name="selectCheckBox" onclick="updateCheck(this.checked, ${cartVO.id})" type="checkbox" name="" checked>
             </c:if>
             <c:if test="${cartVO.checked == 0}">
-                <input onclick="updateCheck(this.checked, ${cartVO.id})" type="checkbox" name="" >
+                <input id="checkedBoxId${cartVO.id}" name="selectCheckBox" onclick="updateCheck(this.checked, ${cartVO.id})" type="checkbox" name="" >
             </c:if>
         </li>
         <li class="col02"><img src="${cartVO.mainImageUrl}"></li>
@@ -41,7 +41,7 @@
                 <a href="javascript:;" class="minus fl">-</a>
             </div>
         </li>
-        <li class="col07">${cartVO.productPrice * cartVO.quantity}</li>
+        <li class="col07" id="cartItemTotalPrice${cartVO.id}">${cartVO.productPrice * cartVO.quantity}</li>
         <li class="col08"><a href="javascript:deleteById(${cartVO.id});">删除</a></li>
     </ul>
 </c:forEach>
@@ -49,7 +49,7 @@
 <ul class="settlements">
     <li class="col01"><input type="checkbox" name="" checked=""></li>
     <li class="col02">全选</li>
-    <li class="col03">合计(不含运费)：<span>¥</span><em>42.60</em><br>共计<b>2</b>件商品</li>
+    <li class="col03">合计(不含运费)：<span>¥</span><em id="totalPrice"></em><br>共计<b id="checkedTotalCount"></b>件商品</li>
     <li class="col04"><a href="/order/getConfirmOrderPage">去结算</a></li>
 </ul>
 
@@ -69,6 +69,24 @@
 
 
 <script>
+
+    $(function () {
+        refreshTotalPrice()
+    });
+
+    function refreshTotalPrice() {
+        var checkBoxs = $('input[name=selectCheckBox]:checked');
+        $('#checkedTotalCount').text(checkBoxs.length);
+        var totalPrice = 0.0;
+        $(checkBoxs).each(function () {
+            var checkedBoxId = this.id;
+            var cartId = checkedBoxId.substr('checkedBoxId'.length);
+            var cartItemTotalPrice = $('#cartItemTotalPrice'+cartId).text();
+            totalPrice += parseFloat(cartItemTotalPrice);
+        });
+        $('#totalPrice').text(totalPrice);
+    }
+
     function deleteById(id) {
         layer.confirm(
             '您确认要删除么？',
@@ -80,6 +98,7 @@
                         if (jsonResult.ok) {
                             mylayer.okMsg(jsonResult.msg);
                             $('#cartVO'+id).remove();
+                            refreshTotalPrice();
                         } else {
                             mylayer.errorMsg(jsonResult.msg);
                         }
@@ -97,6 +116,7 @@
             function (jsonResult) {
                 if (jsonResult.ok) {
                     mylayer.okMsg(jsonResult.msg);
+                    refreshTotalPrice();
                 } else {
                     mylayer.errorMsg(jsonResult.msg);
                 }
