@@ -21,7 +21,7 @@
 </ul>
 
 <c:forEach items="${list}" var="cartVO">
-    <ul class="cart_list_td clearfix">
+    <ul id="cartVO${cartVO.id}" class="cart_list_td clearfix">
         <li   class="col01">
             <c:if test="${cartVO.checked == 1}">
                 <input onclick="updateCheck(this.checked, ${cartVO.id})" type="checkbox" name="" checked>
@@ -42,7 +42,7 @@
             </div>
         </li>
         <li class="col07">${cartVO.productPrice * cartVO.quantity}</li>
-        <li class="col08"><a href="javascript:;">删除</a></li>
+        <li class="col08"><a href="javascript:deleteById(${cartVO.id});">删除</a></li>
     </ul>
 </c:forEach>
 
@@ -69,6 +69,26 @@
 
 
 <script>
+    function deleteById(id) {
+        layer.confirm(
+            '您确认要删除么？',
+            function () {
+                $.post(
+                    '/cart/deleteById',
+                    {'id' : id},
+                    function (jsonResult) {
+                        if (jsonResult.ok) {
+                            mylayer.okMsg(jsonResult.msg);
+                            $('#cartVO'+id).remove();
+                        } else {
+                            mylayer.errorMsg(jsonResult.msg);
+                        }
+                    }
+                );
+            }
+        );
+    }
+
     function updateCheck(check, id) {
         var checked = check ? 1 : 0;
         $.post(
