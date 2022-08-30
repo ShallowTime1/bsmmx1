@@ -25,6 +25,11 @@ public class UserController {
         return user == null ? JSONResult.error() : JSONResult.ok();
     }
 
+    @RequestMapping("/getLoginPage")
+    public String getLoginPage(){
+        return "login";
+    }
+
     @ResponseBody
     @RequestMapping("/login")
     public JSONResult login (String username, String password, HttpSession session) {

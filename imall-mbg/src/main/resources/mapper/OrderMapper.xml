@@ -185,4 +185,24 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where order_no = #{orderNo,jdbcType=BIGINT}
   </update>
+
+  <resultMap id="OrderVOResultMap" type="OrderVO">
+    <id property="orderNo" column="order_no"/>
+    <result property="createTime" column="create_time"/>
+    <result property="payment" column="payment"/>
+    <result property="status" column="status"/>
+    <collection property="list" ofType="com.situ.mall.pojo.OrderItem">
+      <result property="productId" column="product_id"/>
+      <result property="productName" column="product_name"/>
+      <result property="productImage" column="product_image"/>
+      <result property="quantity" column="quantity"/>
+      <result property="currentUnitPrice" column="current_unit_price"/>
+    </collection>
+  </resultMap>
+  <select id="selectOrderVOByUserId" parameterType="Integer" resultMap="OrderVOResultMap">
+    SELECT o.order_no,o.create_time,o.status,o.payment,oi.product_id,oi.product_name,oi.product_image,oi.quantity,oi.current_unit_price
+    FROM `order` AS o INNER JOIN order_item AS oi
+    ON o.order_no=oi.order_no
+    where o.user_id=#{id}
+  </select>
 </mapper>

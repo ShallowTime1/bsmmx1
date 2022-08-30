@@ -1,5 +1,7 @@
 package com.situ.mall.pojo;
 
+import com.situ.mall.util.ImageServerUtil;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -28,6 +30,11 @@ public class OrderItem implements Serializable {
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;
+
+    public String getMainImageUrl() {
+        return ImageServerUtil.getImageUrl(productImage);
+    }
+
 
     public Integer getId() {
         return id;

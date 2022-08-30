@@ -6,15 +6,18 @@ import com.situ.mall.mapper.OrderMapper;
 import com.situ.mall.pojo.Order;
 import com.situ.mall.pojo.OrderItem;
 import com.situ.mall.pojo.VO.CartVO;
+import com.situ.mall.pojo.VO.OrderVO;
 import com.situ.mall.service.IOrderService;
 import com.situ.mall.util.SnowFlake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements IOrderService {
 
     @Autowired
@@ -48,8 +51,17 @@ public class OrderServiceImpl implements IOrderService {
             orderItem.setTotalPrice(totalPrice);
 
             payment = payment.add(totalPrice);
+
             orderItemMapper.insert(orderItem);
+
+            cartMapper.deleteByPrimaryKey(cartVO.getId());
         }
+        order.setPayment(payment);
         orderMapper.insert(order);
+    }
+
+    @Override
+    public List<OrderVO> selectOrderVOByUserId(Integer id) {
+        return orderMapper.selectOrderVOByUserId(id);
     }
 }

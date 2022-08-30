@@ -4,6 +4,7 @@ import com.situ.mall.pojo.Order;
 import com.situ.mall.pojo.Shipping;
 import com.situ.mall.pojo.User;
 import com.situ.mall.pojo.VO.CartVO;
+import com.situ.mall.pojo.VO.OrderVO;
 import com.situ.mall.service.ICartService;
 import com.situ.mall.service.IOrderService;
 import com.situ.mall.service.IShippingService;
@@ -49,7 +50,10 @@ public class OrderController {
     }
 
     @RequestMapping("/getOrderListPage")
-    public String getOrderListPage() {
+    public String getOrderListPage(HttpSession session,Model model) {
+        User user = (User) session.getAttribute("user");
+        List<OrderVO> orderVOList = orderService.selectOrderVOByUserId(user.getId());
+        model.addAttribute("orderVOList", orderVOList);
         return "order_list";
     }
 }
